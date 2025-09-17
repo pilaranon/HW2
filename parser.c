@@ -18,24 +18,17 @@ void expr(void);
 void term(void);
 void factor(void);
 
-
-/******************************************************************
- * FUNCTION: error
- * PURPOSE: Print a syntax error message and terminate the program.
- ******************************************************************/
+/* Print error message and stop */
 static void error(const char *msg) {
-    fprintf(stderr, "Syntax error: %s (at '%s')\n", msg, lexeme);
+    fprintf(stderr, "Syntax error: %s at '%s'\n", msg, lexeme);
     exit(1);
 }
 
-/******************************************************************
- * FUNCTION: expr
- * PURPOSE:  Parse an <expr> (one or more terms separated by + or -).
- * ALGORITHM: Call term(), then loop on + / -.
- ******************************************************************/
+/* <expr> -> <term> {(+|-) <term>} */
 void expr(void) {
     printf("Enter <expr>\n");
     term();
+    /* As long as token is + or -, get next token and parse term */
     while (nextToken == ADD_OP || nextToken == SUB_OP) {
         lex();
         term();
@@ -43,11 +36,7 @@ void expr(void) {
     printf("Exit <expr>\n");
 }
 
-
-/******************************************************************
- * FUNCTION: term
- * PURPOSE:  Parse <term>, handling *, /, and MOD (%).
- ******************************************************************/
+/* <term> -> <factor> {(*|/|%) <factor>} */
 void term(void) {
     printf("Enter <term>\n");
     factor();
@@ -60,11 +49,7 @@ void term(void) {
     printf("Exit <term>\n");
 }
 
-
-/******************************************************************
- * FUNCTION: factor
- * PURPOSE:  Parse <factor>: identifier, int literal, or (expr).
- ******************************************************************/
+/* <factor> -> id | int_constant | ( <expr> ) */
 void factor(void) {
     printf("Enter <factor>\n");
     if (nextToken == IDENT || nextToken == INT_LIT) {
@@ -73,25 +58,17 @@ void factor(void) {
         lex();
         expr();
         if (nextToken == RIGHT_PAREN) lex();
-        else error("missing ')'");
-    } else error("unexpected token");
+        else error("missing )");
+    } else {
+        error("unexpected token");
+    }
     printf("Exit <factor>\n");
 }
 
-/******************************************************************
- * FUNCTION: main
- * PURPOSE: Entry point for the parser.
- * ALGORITHM:
- *   - Open "front.in" for input, or use stdin.
- *   - Initialize lexer (getChar, lex).
- *   - Call expr() if not EOF, then check for trailing tokens.
- *   - Print "Parsing completed." on success.
- * INPUT:  Expression from file or stdin.
- * OUTPUT: Trace of parser calls.
- ******************************************************************/
+/* Main: open input, init lexer, run parser */
 int main(void) {
     in_fp = fopen("front.in", "r");
-    if (!in_fp) { in_fp = stdin; fprintf(stderr,"Reading from stdin\n"); }
+    if (!in_fp) { in_fp = stdin; fprintf(stderr,"Using stdin\n"); }
 
     getChar();
     lex();
