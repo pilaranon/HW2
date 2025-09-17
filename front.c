@@ -42,8 +42,10 @@ FILE *in_fp;
 #define RIGHT_PAREN 26
 #define EOF_TOKEN  -1
 
+
 /******************************************************************
- * lookup – Map single-char operators or parens to token codes.
+ * FUNCTION: lookup
+ * PURPOSE:  Map special characters (+ - * / % ( )) to token codes.
  ******************************************************************/
 int lookup(char ch) {
     switch (ch) {
@@ -59,8 +61,10 @@ int lookup(char ch) {
     return nextToken;
 }
 
+
 /******************************************************************
- * addChar – Append nextChar to lexeme (if buffer not full).
+ * FUNCTION: addChar
+ * PURPOSE:  Append nextChar to lexeme if buffer limit not reached.
  ******************************************************************/
 void addChar(void) {
     if (lexLen <= 98) {
@@ -69,9 +73,9 @@ void addChar(void) {
     } else
         printf("Error: lexeme too long\n");
 }
-
 /******************************************************************
- * getChar – Read next character and classify it.
+ * FUNCTION: getChar
+ * PURPOSE:  Read next character from input file and classify it.
  ******************************************************************/
 void getChar(void) {
     int c = getc(in_fp);
@@ -87,7 +91,8 @@ void getChar(void) {
 }
 
 /******************************************************************
- * getNonBlank – Skip whitespace.
+ * FUNCTION: getNonBlank
+ * PURPOSE:  Skip whitespace characters in input.
  ******************************************************************/
 void getNonBlank(void) {
     while (isspace((unsigned char)nextChar))
@@ -95,7 +100,8 @@ void getNonBlank(void) {
 }
 
 /******************************************************************
- * lex – Main lexical analyzer. Prints token/lexeme each time.
+ * FUNCTION: lex
+ * PURPOSE:  Main lexical analyzer; returns next token.
  ******************************************************************/
 int lex(void) {
     lexLen = 0;
