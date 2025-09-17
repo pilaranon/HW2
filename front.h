@@ -8,8 +8,6 @@
 /* DATE: 09/17/2025                                               */
 /******************************************************************/
 
-/* front.h — token codes and lexer prototypes */
-
 #ifndef FRONT_H
 #define FRONT_H
 
