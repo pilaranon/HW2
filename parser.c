@@ -18,17 +18,21 @@ void expr(void);
 void term(void);
 void factor(void);
 
-/* Print error message and stop */
+/******************************************************************
+ * FUNCTION: error
+ * PURPOSE:  Print a syntax error message and terminate.
+ ******************************************************************/
 static void error(const char *msg) {
     fprintf(stderr, "Syntax error: %s at '%s'\n", msg, lexeme);
     exit(1);
 }
-
-/* <expr> -> <term> {(+|-) <term>} */
+/******************************************************************
+ * FUNCTION: expr
+ * PURPOSE:  Parse <expr> -> <term> {(+|-) <term>}.
+ ******************************************************************/
 void expr(void) {
     printf("Enter <expr>\n");
     term();
-    /* As long as token is + or -, get next token and parse term */
     while (nextToken == ADD_OP || nextToken == SUB_OP) {
         lex();
         term();
@@ -36,7 +40,10 @@ void expr(void) {
     printf("Exit <expr>\n");
 }
 
-/* <term> -> <factor> {(*|/|%) <factor>} */
+/******************************************************************
+ * FUNCTION: term
+ * PURPOSE:  Parse <term> -> <factor> {(*|/|%) <factor>}.
+ ******************************************************************/
 void term(void) {
     printf("Enter <term>\n");
     factor();
@@ -48,8 +55,10 @@ void term(void) {
     }
     printf("Exit <term>\n");
 }
-
-/* <factor> -> id | int_constant | ( <expr> ) */
+/******************************************************************
+ * FUNCTION: factor
+ * PURPOSE:  Parse <factor> -> id | int_constant | ( <expr> ).
+ ******************************************************************/
 void factor(void) {
     printf("Enter <factor>\n");
     if (nextToken == IDENT || nextToken == INT_LIT) {
@@ -65,7 +74,10 @@ void factor(void) {
     printf("Exit <factor>\n");
 }
 
-/* Main: open input, init lexer, run parser */
+/******************************************************************
+ * FUNCTION: main
+ * PURPOSE:  Initialize lexer and run parser on input file.
+ ******************************************************************/
 int main(void) {
     in_fp = fopen("front.in", "r");
     if (!in_fp) { in_fp = stdin; fprintf(stderr,"Using stdin\n"); }
