@@ -12,7 +12,6 @@
 
 #include <stdio.h>
 #include <ctype.h>
-#include "front.h"
 
 /* -------- Global variables -------- */
 int charClass;         /* letter / digit / unknown / EOF */
