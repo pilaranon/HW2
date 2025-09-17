@@ -1,11 +1,9 @@
 /******************************************************************
- * front.c – Lexical Analyzer for Arithmetic Expressions
- *
+ * Program: Lexical Analyzer for Arithmetic Expressions
  * PURPOSE:
  *   Scan an input expression and break it into tokens (identifiers,
  *   integers, operators, parentheses).  Based on Sebesta Ch.4.2,
  *   with MOD (%) support.
- *
  * IMPLEMENTED BY: Nathan Malaluan
  * COURSE: CS 351
  * INSTRUCTOR: Prof. Shaun-inn Wu
